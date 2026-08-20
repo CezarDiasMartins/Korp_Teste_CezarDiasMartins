@@ -1,0 +1,48 @@
+.page {
+  display: grid;
+  gap: 18px;
+}
+
+.page-header,
+.summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 650;
+}
+
+p {
+  margin: 4px 0 0;
+  color: #5d6470;
+}
+
+.summary {
+  justify-content: flex-start;
+}
+
+.summary div {
+  display: grid;
+  min-width: 160px;
+}
+
+.summary span {
+  color: #6d7480;
+  font-size: 13px;
+}
+
+.table-wrap {
+  border: 1px solid #d8dde6;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+}
+
+table {
+  width: 100%;
+}

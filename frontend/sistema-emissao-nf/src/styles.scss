@@ -1,0 +1,46 @@
+@use '@angular/material' as mat;
+
+html {
+  color-scheme: light;
+  @include mat.theme((
+    color: (
+      primary: mat.$azure-palette,
+      tertiary: mat.$green-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #f4f6f9;
+  color: #1d2430;
+  font-family: Roboto, Arial, sans-serif;
+}
+
+button mat-icon,
+a mat-icon {
+  margin-right: 4px;
+}
+
+.mat-mdc-icon-button mat-icon {
+  margin-right: 0;
+}
+
+.snackbar-success {
+  --mdc-snackbar-container-color: #1f7a4d;
+  --mat-snack-bar-button-color: #fff;
+  color: #fff;
+}
+
+.snackbar-error {
+  --mdc-snackbar-container-color: #b3261e;
+  --mat-snack-bar-button-color: #fff;
+  color: #fff;
+}

@@ -1,0 +1,34 @@
+<h2 mat-dialog-title>Incluir item</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="form">
+    <mat-form-field appearance="outline">
+      <mat-label>Produto *</mat-label>
+      <mat-select formControlName="produtoId">
+        @for (produto of data.produtos; track produto.id) {
+          <mat-option [value]="produto.id">
+            {{ produto.codigo }} - {{ produto.descricao }} (saldo {{ produto.saldo }})
+          </mat-option>
+        }
+      </mat-select>
+      <mat-error>Informe um produto.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Quantidade *</mat-label>
+      <input matInput type="number" formControlName="quantidade" />
+      <mat-error>Informe uma quantidade valida.</mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-stroked-button mat-dialog-close>
+    <mat-icon>close</mat-icon>
+    Cancelar
+  </button>
+  <button mat-flat-button color="primary" type="button" (click)="confirm()">
+    <mat-icon>check</mat-icon>
+    Incluir
+  </button>
+</mat-dialog-actions>

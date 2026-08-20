@@ -1,0 +1,62 @@
+<section class="page">
+  <header class="page-header">
+    <div>
+      <h1>Produtos</h1>
+      <p>Cadastro e saldo de estoque</p>
+    </div>
+    <a mat-flat-button color="primary" routerLink="/produtos/incluir">
+      <mat-icon>add</mat-icon>
+      Incluir
+    </a>
+  </header>
+
+  <app-loading [show]="loading"></app-loading>
+
+  @if (!loading) {
+    <div class="table-wrap">
+      <table mat-table [dataSource]="produtos">
+        <ng-container matColumnDef="codigo">
+          <th mat-header-cell *matHeaderCellDef>Codigo</th>
+          <td mat-cell *matCellDef="let produto">{{ produto.codigo }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="descricao">
+          <th mat-header-cell *matHeaderCellDef>Descricao</th>
+          <td mat-cell *matCellDef="let produto">{{ produto.descricao }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="saldo">
+          <th mat-header-cell *matHeaderCellDef>Saldo</th>
+          <td mat-cell *matCellDef="let produto">{{ produto.saldo }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="acoes">
+          <th mat-header-cell *matHeaderCellDef>Acoes</th>
+          <td mat-cell *matCellDef="let produto" class="actions">
+            <a mat-icon-button [routerLink]="['/produtos/visualizar', produto.id]" aria-label="Visualizar produto">
+              <mat-icon>visibility</mat-icon>
+            </a>
+            <a mat-icon-button [routerLink]="['/produtos/alterar', produto.id]" aria-label="Alterar produto">
+              <mat-icon>edit</mat-icon>
+            </a>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      @if (produtos.length === 0) {
+        <div class="empty">Nenhum produto cadastrado.</div>
+      }
+
+      <mat-paginator
+        [length]="total"
+        [pageIndex]="page - 1"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="[5, 10, 20]"
+        (page)="pageChanged($event)">
+      </mat-paginator>
+    </div>
+  }
+</section>

@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-SistemaEmissaoNF.Faturamento.Worker-82d4db16-ae77-4169-9d1e-ce784730f78f</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SistemaEmissaoNF.Faturamento.Application\SistemaEmissaoNF.Faturamento.Application.csproj" />
+    <ProjectReference Include="..\SistemaEmissaoNF.Faturamento.Infrastructure\SistemaEmissaoNF.Faturamento.Infrastructure.csproj" />
+    <ProjectReference Include="..\SistemaEmissaoNF.Faturamento.Domain\SistemaEmissaoNF.Faturamento.Domain.csproj" />
+  </ItemGroup>
+</Project>

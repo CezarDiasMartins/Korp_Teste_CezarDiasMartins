@@ -1,0 +1,74 @@
+<section class="page">
+  <header class="page-header">
+    <div>
+      <h1>Notas Fiscais</h1>
+      <p>Emissao, impressao e PDF</p>
+    </div>
+    <a mat-flat-button color="primary" routerLink="/incluir">
+      <mat-icon>add</mat-icon>
+      Incluir
+    </a>
+  </header>
+
+  @if (processingId) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    <div class="processing">Processando Nota Fiscal...</div>
+  }
+
+  <app-loading [show]="loading"></app-loading>
+
+  @if (!loading) {
+    <div class="table-wrap">
+      <table mat-table [dataSource]="notas">
+        <ng-container matColumnDef="numero">
+          <th mat-header-cell *matHeaderCellDef>NF</th>
+          <td mat-cell *matCellDef="let nota">{{ nota.numeroFormatado }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let nota">{{ nota.statusDescricao }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="impressao">
+          <th mat-header-cell *matHeaderCellDef>Impressao</th>
+          <td mat-cell *matCellDef="let nota">{{ nota.status === 'A' ? '-' : nota.statusImpressaoDescricao }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="acoes">
+          <th mat-header-cell *matHeaderCellDef>Acoes</th>
+          <td mat-cell *matCellDef="let nota" class="actions">
+            <a mat-icon-button [routerLink]="['/visualizar', nota.id]" aria-label="Visualizar nota fiscal">
+              <mat-icon>visibility</mat-icon>
+            </a>
+            @if (nota.status === 'A') {
+              <button mat-icon-button type="button" (click)="imprimir(nota)" aria-label="Imprimir nota fiscal">
+                <mat-icon>print</mat-icon>
+              </button>
+            }
+            @if (nota.status === 'F' && nota.statusImpressao === 'C') {
+              <button mat-icon-button type="button" (click)="abrirPdf(nota)" aria-label="Abrir PDF">
+                <mat-icon>picture_as_pdf</mat-icon>
+              </button>
+            }
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      @if (notas.length === 0) {
+        <div class="empty">Nenhuma nota fiscal cadastrada.</div>
+      }
+
+      <mat-paginator
+        [length]="total"
+        [pageIndex]="page - 1"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="[5, 10, 20]"
+        (page)="pageChanged($event)">
+      </mat-paginator>
+    </div>
+  }
+</section>

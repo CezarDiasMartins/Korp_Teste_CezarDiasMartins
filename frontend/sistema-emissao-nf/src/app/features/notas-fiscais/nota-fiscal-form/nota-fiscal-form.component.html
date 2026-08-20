@@ -1,0 +1,57 @@
+<section class="page">
+  <header class="page-header">
+    <div>
+      <h1>Nova Nota Fiscal</h1>
+      <p>Status: Aberta</p>
+    </div>
+    <button mat-flat-button color="primary" type="button" (click)="openItemDialog()">
+      <mat-icon>add</mat-icon>
+      Incluir item
+    </button>
+  </header>
+
+  <app-loading [show]="loading"></app-loading>
+
+  @if (!loading) {
+    <div class="table-wrap">
+      <table mat-table [dataSource]="itens">
+        <ng-container matColumnDef="produto">
+          <th mat-header-cell *matHeaderCellDef>Produto</th>
+          <td mat-cell *matCellDef="let item">{{ item.produtoCodigo }} - {{ item.produtoDescricao }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="quantidade">
+          <th mat-header-cell *matHeaderCellDef>Quantidade</th>
+          <td mat-cell *matCellDef="let item">{{ item.quantidade }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="acao">
+          <th mat-header-cell *matHeaderCellDef>Acao</th>
+          <td mat-cell *matCellDef="let item">
+            <button mat-icon-button type="button" (click)="remove(item)" aria-label="Remover item">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      @if (itens.length === 0) {
+        <div class="empty">Nenhum item incluido.</div>
+      }
+    </div>
+
+    <div class="actions">
+      <a mat-stroked-button routerLink="/notas-fiscais">
+        <mat-icon>close</mat-icon>
+        Cancelar
+      </a>
+      <button mat-flat-button color="primary" type="button" (click)="save()">
+        <mat-icon>save</mat-icon>
+        Salvar
+      </button>
+    </div>
+  }
+</section>

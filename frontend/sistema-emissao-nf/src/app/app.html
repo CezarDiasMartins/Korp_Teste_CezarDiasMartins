@@ -1,0 +1,20 @@
+<mat-toolbar color="primary">
+  <a class="brand" routerLink="/notas-fiscais">
+    <mat-icon>receipt_long</mat-icon>
+    Sistema de Emissao NF
+  </a>
+  <nav>
+    <a mat-button routerLink="/notas-fiscais" routerLinkActive="active">
+      <mat-icon>description</mat-icon>
+      Notas Fiscais
+    </a>
+    <a mat-button routerLink="/produtos" routerLinkActive="active">
+      <mat-icon>inventory_2</mat-icon>
+      Produtos
+    </a>
+  </nav>
+</mat-toolbar>
+
+<main>
+  <router-outlet></router-outlet>
+</main>

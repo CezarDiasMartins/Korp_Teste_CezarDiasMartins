@@ -1,0 +1,44 @@
+.page {
+  display: grid;
+  gap: 18px;
+}
+
+.page-header,
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.actions {
+  justify-content: flex-end;
+}
+
+h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 650;
+}
+
+p {
+  margin: 4px 0 0;
+  color: #5d6470;
+}
+
+.table-wrap {
+  border: 1px solid #d8dde6;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+}
+
+table {
+  width: 100%;
+}
+
+.empty {
+  padding: 30px;
+  text-align: center;
+  color: #6d7480;
+}
