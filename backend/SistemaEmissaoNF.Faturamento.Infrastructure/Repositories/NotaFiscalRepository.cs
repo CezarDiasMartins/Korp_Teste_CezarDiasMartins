@@ -11,7 +11,7 @@ public class NotaFiscalRepository(FaturamentoDbContext dbContext)
     public async Task<long> GetNextNumeroSequencialAsync(CancellationToken cancellationToken)
     {
         return await DbContext.Database
-            .SqlQueryRaw<long>("SELECT nextval('nota_fiscal_numero_seq')")
+            .SqlQueryRaw<long>("SELECT nextval('nota_fiscal_numero_seq') AS \"Value\"")
             .SingleAsync(cancellationToken);
     }
 

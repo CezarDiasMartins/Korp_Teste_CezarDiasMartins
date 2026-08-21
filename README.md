@@ -35,6 +35,19 @@ dotnet ef database update -p backend/SistemaEmissaoNF.Estoque.Infrastructure -s 
 dotnet ef database update -p backend/SistemaEmissaoNF.Faturamento.Infrastructure -s backend/SistemaEmissaoNF.Faturamento.Api
 ```
 
+Se o comando `dotnet ef` nao existir, instale a ferramenta:
+
+```bash
+dotnet tool install --global dotnet-ef
+```
+
+No Windows, se a ferramenta foi instalada mas ainda nao entrou no `PATH`, rode usando o caminho completo:
+
+```powershell
+& "$env:USERPROFILE\.dotnet\tools\dotnet-ef.exe" database update -p backend/SistemaEmissaoNF.Estoque.Infrastructure -s backend/SistemaEmissaoNF.Estoque.Api
+& "$env:USERPROFILE\.dotnet\tools\dotnet-ef.exe" database update -p backend/SistemaEmissaoNF.Faturamento.Infrastructure -s backend/SistemaEmissaoNF.Faturamento.Api
+```
+
 Subir Estoque:
 
 ```bash
@@ -60,7 +73,7 @@ cd frontend/sistema-emissao-nf
 npm install
 npm start
 ```
-
+Faturamento.Worker
 URLs locais:
 
 - Angular: `http://localhost:4200`
@@ -68,6 +81,24 @@ URLs locais:
 - Faturamento API: `http://localhost:5198/swagger`
 - RabbitMQ Management: `http://localhost:15672` (`guest` / `guest`)
 - pgAdmin: `http://localhost:5050` (`admin@local.com` / `admin`)
+
+### Problema Com Docker Desktop
+
+Se `docker compose up -d` retornar erro parecido com `open //./pipe/dockerDesktopLinuxEngine: O sistema nao pode encontrar o arquivo especificado`, o Docker CLI esta instalado, mas o Docker Desktop/engine Linux nao esta rodando.
+
+Abra o Docker Desktop, aguarde aparecer que o engine esta em execucao e rode:
+
+```bash
+docker context use desktop-linux
+docker version
+docker compose up -d
+```
+
+Se continuar falhando, reinicie o WSL e abra o Docker Desktop novamente:
+
+```bash
+wsl --shutdown
+```
 
 ## Testes e Build
 
