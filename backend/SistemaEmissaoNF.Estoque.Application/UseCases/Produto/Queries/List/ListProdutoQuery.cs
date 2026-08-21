@@ -11,8 +11,7 @@ public class ListProdutoQuery : IRequest<ListPagedResponse<ProdutoResponse>>
     public int QuantityData { get; set; } = 10;
 }
 
-public class ListProdutoQueryHandler(IProdutoRepository produtoRepository, IMapper mapper)
-    : IRequestHandler<ListProdutoQuery, ListPagedResponse<ProdutoResponse>>
+public class ListProdutoQueryHandler(IProdutoRepository produtoRepository, IMapper mapper) : IRequestHandler<ListProdutoQuery, ListPagedResponse<ProdutoResponse>>
 {
     public async Task<ListPagedResponse<ProdutoResponse>> Handle(ListProdutoQuery request, CancellationToken cancellationToken)
     {

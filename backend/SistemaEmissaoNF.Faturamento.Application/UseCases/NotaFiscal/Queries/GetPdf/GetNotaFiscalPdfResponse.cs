@@ -5,8 +5,6 @@ namespace SistemaEmissaoNF.Faturamento.Application.UseCases.NotaFiscal.Queries.G
 public class GetNotaFiscalPdfResponse
 {
     public StatusImpressao StatusImpressao { get; set; }
-
     public byte[]? PdfArquivo { get; set; }
-
     public string Message { get; set; } = string.Empty;
 }

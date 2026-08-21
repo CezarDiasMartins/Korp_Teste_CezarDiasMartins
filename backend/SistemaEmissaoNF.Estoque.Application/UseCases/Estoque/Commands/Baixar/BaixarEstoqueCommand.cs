@@ -11,8 +11,7 @@ public class BaixarEstoqueCommand : IRequest<GenericNoDataResponse>
     public List<BaixaEstoqueItemRequest> Itens { get; set; } = [];
 }
 
-public class BaixarEstoqueCommandHandler(IProdutoRepository produtoRepository)
-    : IRequestHandler<BaixarEstoqueCommand, GenericNoDataResponse>
+public class BaixarEstoqueCommandHandler(IProdutoRepository produtoRepository) : IRequestHandler<BaixarEstoqueCommand, GenericNoDataResponse>
 {
     public async Task<GenericNoDataResponse> Handle(BaixarEstoqueCommand request, CancellationToken cancellationToken)
     {

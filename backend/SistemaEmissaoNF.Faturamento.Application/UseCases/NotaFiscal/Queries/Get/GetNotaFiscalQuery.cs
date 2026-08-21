@@ -11,8 +11,7 @@ public class GetNotaFiscalQuery : IRequest<GenericDataResponse<NotaFiscalRespons
     public int Id { get; set; }
 }
 
-public class GetNotaFiscalQueryHandler(INotaFiscalRepository notaFiscalRepository)
-    : IRequestHandler<GetNotaFiscalQuery, GenericDataResponse<NotaFiscalResponse>>
+public class GetNotaFiscalQueryHandler(INotaFiscalRepository notaFiscalRepository) : IRequestHandler<GetNotaFiscalQuery, GenericDataResponse<NotaFiscalResponse>>
 {
     public async Task<GenericDataResponse<NotaFiscalResponse>> Handle(GetNotaFiscalQuery request, CancellationToken cancellationToken)
     {

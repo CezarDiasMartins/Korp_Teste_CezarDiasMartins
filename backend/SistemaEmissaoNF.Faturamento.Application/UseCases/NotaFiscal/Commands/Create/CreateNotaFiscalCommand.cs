@@ -13,8 +13,7 @@ public class CreateNotaFiscalCommand : IRequest<GenericDataResponse<NotaFiscalRe
     public List<CreateNotaFiscalItemCommand> Itens { get; set; } = [];
 }
 
-public class CreateNotaFiscalCommandHandler(INotaFiscalRepository notaFiscalRepository)
-    : IRequestHandler<CreateNotaFiscalCommand, GenericDataResponse<NotaFiscalResponse>>
+public class CreateNotaFiscalCommandHandler(INotaFiscalRepository notaFiscalRepository) : IRequestHandler<CreateNotaFiscalCommand, GenericDataResponse<NotaFiscalResponse>>
 {
     public async Task<GenericDataResponse<NotaFiscalResponse>> Handle(CreateNotaFiscalCommand request, CancellationToken cancellationToken)
     {

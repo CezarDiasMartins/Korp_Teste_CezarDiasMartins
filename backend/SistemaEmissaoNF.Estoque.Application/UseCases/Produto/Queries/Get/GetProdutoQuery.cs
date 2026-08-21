@@ -10,8 +10,7 @@ public class GetProdutoQuery : IRequest<GenericDataResponse<ProdutoResponse>>
     public int Id { get; set; }
 }
 
-public class GetProdutoQueryHandler(IProdutoRepository produtoRepository, IMapper mapper)
-    : IRequestHandler<GetProdutoQuery, GenericDataResponse<ProdutoResponse>>
+public class GetProdutoQueryHandler(IProdutoRepository produtoRepository, IMapper mapper) : IRequestHandler<GetProdutoQuery, GenericDataResponse<ProdutoResponse>>
 {
     public async Task<GenericDataResponse<ProdutoResponse>> Handle(GetProdutoQuery request, CancellationToken cancellationToken)
     {

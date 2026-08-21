@@ -10,8 +10,7 @@ public class GetNotaFiscalPdfQuery : IRequest<GenericDataResponse<GetNotaFiscalP
     public int Id { get; set; }
 }
 
-public class GetNotaFiscalPdfQueryHandler(INotaFiscalRepository notaFiscalRepository)
-    : IRequestHandler<GetNotaFiscalPdfQuery, GenericDataResponse<GetNotaFiscalPdfResponse>>
+public class GetNotaFiscalPdfQueryHandler(INotaFiscalRepository notaFiscalRepository) : IRequestHandler<GetNotaFiscalPdfQuery, GenericDataResponse<GetNotaFiscalPdfResponse>>
 {
     public async Task<GenericDataResponse<GetNotaFiscalPdfResponse>> Handle(GetNotaFiscalPdfQuery request, CancellationToken cancellationToken)
     {

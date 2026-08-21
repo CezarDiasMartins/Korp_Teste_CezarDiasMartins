@@ -12,8 +12,7 @@ public class ListNotaFiscalQuery : IRequest<ListPagedResponse<NotaFiscalResponse
     public int QuantityData { get; set; } = 10;
 }
 
-public class ListNotaFiscalQueryHandler(INotaFiscalRepository notaFiscalRepository)
-    : IRequestHandler<ListNotaFiscalQuery, ListPagedResponse<NotaFiscalResponse>>
+public class ListNotaFiscalQueryHandler(INotaFiscalRepository notaFiscalRepository) : IRequestHandler<ListNotaFiscalQuery, ListPagedResponse<NotaFiscalResponse>>
 {
     public async Task<ListPagedResponse<NotaFiscalResponse>> Handle(ListNotaFiscalQuery request, CancellationToken cancellationToken)
     {

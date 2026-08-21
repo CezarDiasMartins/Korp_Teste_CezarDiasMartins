@@ -1,17 +1,13 @@
 using MediatR;
 using SistemaEmissaoNF.Estoque.Application.Interfaces;
 using SistemaEmissaoNF.Estoque.Application.Response;
-using SistemaEmissaoNF.Estoque.Application.UseCases.Produto.Commands;
 using SistemaEmissaoNF.Estoque.Application.UseCases.Produto.Response;
 
 namespace SistemaEmissaoNF.Estoque.Application.UseCases.Produto.Commands.Create;
 
 public class CreateProdutoCommand : ProdutoCommandBase, IRequest<GenericDataResponse<ProdutoResponse>>;
 
-public class CreateProdutoCommandHandler(
-    IProdutoRepository produtoRepository,
-    IMapper mapper)
-    : IRequestHandler<CreateProdutoCommand, GenericDataResponse<ProdutoResponse>>
+public class CreateProdutoCommandHandler(IProdutoRepository produtoRepository, IMapper mapper) : IRequestHandler<CreateProdutoCommand, GenericDataResponse<ProdutoResponse>>
 {
     public async Task<GenericDataResponse<ProdutoResponse>> Handle(CreateProdutoCommand request, CancellationToken cancellationToken)
     {

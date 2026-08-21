@@ -1,7 +1,6 @@
 using MediatR;
 using SistemaEmissaoNF.Estoque.Application.Interfaces;
 using SistemaEmissaoNF.Estoque.Application.Response;
-using SistemaEmissaoNF.Estoque.Application.UseCases.Produto.Commands;
 using SistemaEmissaoNF.Estoque.Application.UseCases.Produto.Response;
 
 namespace SistemaEmissaoNF.Estoque.Application.UseCases.Produto.Commands.Update;
@@ -11,10 +10,7 @@ public class UpdateProdutoCommand : ProdutoCommandBase, IRequest<GenericDataResp
     public int Id { get; set; }
 }
 
-public class UpdateProdutoCommandHandler(
-    IProdutoRepository produtoRepository,
-    IMapper mapper)
-    : IRequestHandler<UpdateProdutoCommand, GenericDataResponse<ProdutoResponse>>
+public class UpdateProdutoCommandHandler(IProdutoRepository produtoRepository, IMapper mapper) : IRequestHandler<UpdateProdutoCommand, GenericDataResponse<ProdutoResponse>>
 {
     public async Task<GenericDataResponse<ProdutoResponse>> Handle(UpdateProdutoCommand request, CancellationToken cancellationToken)
     {
