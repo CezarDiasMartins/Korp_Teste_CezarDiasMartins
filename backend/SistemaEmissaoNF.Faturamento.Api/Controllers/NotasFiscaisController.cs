@@ -59,14 +59,10 @@ public class NotasFiscaisController(IMediator mediator) : ControllerBase
             return NotFound(response);
 
         if (response.Data.StatusImpressao == StatusImpressao.Concluido && response.Data.PdfArquivo is not null)
-        {
             return File(response.Data.PdfArquivo, "application/pdf", $"nota-fiscal-{id}.pdf");
-        }
 
         if (response.Data.StatusImpressao == StatusImpressao.Erro)
-        {
             return BadRequest(new GenericNoDataResponse { Errors = [response.Data.Message] });
-        }
 
         return Accepted(new GenericNoDataResponse { Errors = [response.Data.Message] });
     }
