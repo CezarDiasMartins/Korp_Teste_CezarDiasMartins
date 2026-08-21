@@ -1,16 +1,10 @@
 <section class="page">
-  <header class="page-header">
-    <div>
-      <h1>Visualizar Nota Fiscal</h1>
-      @if (nota) {
-        <p>Número {{ nota.numeroFormatado }}</p>
-      }
-    </div>
-    <a mat-stroked-button routerLink="/notas-fiscais">
+  <app-page-header title="Visualizar Nota Fiscal" [subtitle]="nota ? 'Número ' + nota.numeroFormatado : ''">
+    <a actions mat-stroked-button routerLink="/notas-fiscais">
       <mat-icon>arrow_back</mat-icon>
       Voltar
     </a>
-  </header>
+  </app-page-header>
 
   <app-loading [show]="loading"></app-loading>
 

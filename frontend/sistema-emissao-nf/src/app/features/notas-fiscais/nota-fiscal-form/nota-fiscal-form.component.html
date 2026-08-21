@@ -1,14 +1,10 @@
 <section class="page">
-  <header class="page-header">
-    <div>
-      <h1>Nova Nota Fiscal</h1>
-      <p>Status: Aberta</p>
-    </div>
-    <button mat-flat-button color="primary" type="button" (click)="openItemDialog()">
+  <app-page-header title="Nova Nota Fiscal" subtitle="Status: Aberta">
+    <button actions mat-flat-button color="primary" type="button" (click)="openItemDialog()">
       <mat-icon>add</mat-icon>
       Incluir item
     </button>
-  </header>
+  </app-page-header>
 
   <app-loading [show]="loading"></app-loading>
 
@@ -43,15 +39,11 @@
       }
     </div>
 
-    <div class="actions">
-      <a mat-stroked-button routerLink="/notas-fiscais">
-        <mat-icon>close</mat-icon>
-        Cancelar
-      </a>
-      <button mat-flat-button color="primary" type="button" (click)="save()">
-        <mat-icon>save</mat-icon>
-        Salvar
-      </button>
-    </div>
+    <app-form-actions
+      backLink="/notas-fiscais"
+      backLabel="Cancelar"
+      backIcon="close"
+      (primaryClick)="save()">
+    </app-form-actions>
   }
 </section>

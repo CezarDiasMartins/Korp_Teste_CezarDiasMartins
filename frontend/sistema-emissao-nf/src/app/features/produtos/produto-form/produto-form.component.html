@@ -1,10 +1,5 @@
 <section class="page">
-  <header class="page-header">
-    <div>
-      <h1>{{ title }}</h1>
-      <p>Campos com * são obrigatórios</p>
-    </div>
-  </header>
+  <app-page-header [title]="title" subtitle="Campos com * são obrigatórios"></app-page-header>
 
   <app-loading [show]="loading"></app-loading>
 
@@ -28,18 +23,11 @@
         <mat-error>O saldo não pode ser negativo.</mat-error>
       </mat-form-field>
 
-      <div class="actions">
-        <a mat-stroked-button routerLink="/produtos">
-          <mat-icon>arrow_back</mat-icon>
-          Voltar
-        </a>
-        @if (!readonly) {
-          <button mat-flat-button color="primary" type="button" (click)="save()">
-            <mat-icon>save</mat-icon>
-            Salvar
-          </button>
-        }
-      </div>
+      <app-form-actions
+        backLink="/produtos"
+        [showPrimary]="!readonly"
+        (primaryClick)="save()">
+      </app-form-actions>
     </form>
   }
 </section>

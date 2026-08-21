@@ -1,5 +1,5 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
@@ -11,15 +11,19 @@ import { NotaFiscal } from '../../../core/models/nota-fiscal';
 import { FeedbackService } from '../../../core/services/feedback.service';
 import { NotaFiscalService } from '../../../core/services/nota-fiscal.service';
 import { LoadingComponent } from '../../../shared/components/loading/loading.component';
+import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
 
 @Component({
   selector: 'app-nota-fiscal-list',
   standalone: true,
-  imports: [MatButtonModule, MatIconModule, MatPaginatorModule, MatProgressBarModule, MatTableModule, RouterLink, LoadingComponent],
+  imports: [MatButtonModule, MatIconModule, MatPaginatorModule, MatProgressBarModule, MatTableModule, RouterLink, LoadingComponent, PageHeaderComponent],
   templateUrl: './nota-fiscal-list.component.html',
   styleUrl: './nota-fiscal-list.component.scss'
 })
 export class NotaFiscalListComponent implements OnInit {
+  private readonly notaFiscalService = inject(NotaFiscalService);
+  private readonly feedback = inject(FeedbackService);
+
   displayedColumns = ['numero', 'status', 'impressao', 'acoes'];
   notas: NotaFiscal[] = [];
   loading = false;
@@ -27,11 +31,6 @@ export class NotaFiscalListComponent implements OnInit {
   page = 1;
   pageSize = 10;
   total = 0;
-
-  constructor(
-    private readonly notaFiscalService: NotaFiscalService,
-    private readonly feedback: FeedbackService
-  ) {}
 
   ngOnInit() {
     this.load();

@@ -1,13 +1,13 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { GenericDataResponse, ListPagedResponse } from '../models/api-response';
 import { Produto, ProdutoPayload } from '../models/produto';
 
 @Injectable({ providedIn: 'root' })
 export class ProdutoService {
-  private readonly baseUrl = 'http://localhost:5153/api/produtos';
-
-  constructor(private readonly http: HttpClient) {}
+  private readonly http = inject(HttpClient);
+  private readonly baseUrl = environment.api.produtosUrl;
 
   list(page = 1, quantityData = 10) {
     const params = new HttpParams()

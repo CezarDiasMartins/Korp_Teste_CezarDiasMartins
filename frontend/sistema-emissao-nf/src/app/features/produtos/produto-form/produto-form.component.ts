@@ -1,23 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProdutoPayload } from '../../../core/models/produto';
 import { FeedbackService } from '../../../core/services/feedback.service';
 import { ProdutoService } from '../../../core/services/produto.service';
+import { FormActionsComponent } from '../../../shared/components/form-actions/form-actions.component';
 import { LoadingComponent } from '../../../shared/components/loading/loading.component';
+import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
 
 @Component({
   selector: 'app-produto-form',
   standalone: true,
-  imports: [ReactiveFormsModule, MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, RouterLink, LoadingComponent],
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, FormActionsComponent, LoadingComponent, PageHeaderComponent],
   templateUrl: './produto-form.component.html',
   styleUrl: './produto-form.component.scss'
 })
 export class ProdutoFormComponent implements OnInit {
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly produtoService = inject(ProdutoService);
+  private readonly feedback = inject(FeedbackService);
+
   form = new FormGroup({
     codigo: new FormControl<number | null>(null, [Validators.required, Validators.min(1)]),
     descricao: new FormControl('', [Validators.required]),
@@ -26,13 +31,6 @@ export class ProdutoFormComponent implements OnInit {
   id?: number;
   loading = false;
   readonly = false;
-
-  constructor(
-    private readonly route: ActivatedRoute,
-    private readonly router: Router,
-    private readonly produtoService: ProdutoService,
-    private readonly feedback: FeedbackService
-  ) {}
 
   ngOnInit() {
     this.id = Number(this.route.snapshot.paramMap.get('id')) || undefined;

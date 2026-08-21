@@ -1,30 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NotaFiscal } from '../../../core/models/nota-fiscal';
 import { FeedbackService } from '../../../core/services/feedback.service';
 import { NotaFiscalService } from '../../../core/services/nota-fiscal.service';
 import { LoadingComponent } from '../../../shared/components/loading/loading.component';
+import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
 
 @Component({
   selector: 'app-nota-fiscal-detail',
   standalone: true,
-  imports: [MatButtonModule, MatIconModule, MatTableModule, RouterLink, LoadingComponent],
+  imports: [MatButtonModule, MatIconModule, MatTableModule, RouterLink, LoadingComponent, PageHeaderComponent],
   templateUrl: './nota-fiscal-detail.component.html',
   styleUrl: './nota-fiscal-detail.component.scss'
 })
 export class NotaFiscalDetailComponent implements OnInit {
+  private readonly route = inject(ActivatedRoute);
+  private readonly notaFiscalService = inject(NotaFiscalService);
+  private readonly feedback = inject(FeedbackService);
+
   displayedColumns = ['produto', 'quantidade'];
   nota?: NotaFiscal;
   loading = false;
-
-  constructor(
-    private readonly route: ActivatedRoute,
-    private readonly notaFiscalService: NotaFiscalService,
-    private readonly feedback: FeedbackService
-  ) {}
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));

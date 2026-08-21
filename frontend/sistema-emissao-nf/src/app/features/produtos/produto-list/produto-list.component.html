@@ -1,14 +1,10 @@
 <section class="page">
-  <header class="page-header">
-    <div>
-      <h1>Produtos</h1>
-      <p>Cadastro e saldo de estoque</p>
-    </div>
-    <a mat-flat-button color="primary" routerLink="/produtos/incluir">
+  <app-page-header title="Produtos" subtitle="Cadastro e saldo de estoque">
+    <a actions mat-flat-button color="primary" routerLink="/produtos/incluir">
       <mat-icon>add</mat-icon>
       Incluir
     </a>
-  </header>
+  </app-page-header>
 
   <app-loading [show]="loading"></app-loading>
 

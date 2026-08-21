@@ -5,8 +5,7 @@ using SistemaEmissaoNF.Estoque.Infrastructure.Context;
 
 namespace SistemaEmissaoNF.Estoque.Infrastructure.Repositories;
 
-public class ProdutoRepository(EstoqueDbContext dbContext)
-    : Repository<Produto>(dbContext), IProdutoRepository
+public class ProdutoRepository(EstoqueDbContext dbContext) : Repository<Produto>(dbContext), IProdutoRepository
 {
     public async Task<bool> CodigoExistsAsync(long codigo, int? ignoreId, CancellationToken cancellationToken)
     {
@@ -33,7 +32,7 @@ public class ProdutoRepository(EstoqueDbContext dbContext)
 
             if (produto.Saldo < item.Quantidade)
             {
-                errors.Add($"Saldo insuficiente para o produto {produto.Codigo}.");
+                errors.Add($"Saldo insuficiente para o produto {produto.Codigo} - {produto.Descricao}.");
                 break;
             }
 

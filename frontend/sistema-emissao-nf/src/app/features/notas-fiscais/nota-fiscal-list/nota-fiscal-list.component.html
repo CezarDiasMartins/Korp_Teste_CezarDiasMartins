@@ -1,14 +1,10 @@
 <section class="page">
-  <header class="page-header">
-    <div>
-      <h1>Notas Fiscais</h1>
-      <p>Emissão, impressão e PDF</p>
-    </div>
-    <a mat-flat-button color="primary" routerLink="/incluir">
+  <app-page-header title="Notas Fiscais" subtitle="Emissão, impressão e PDF">
+    <a actions mat-flat-button color="primary" routerLink="/incluir">
       <mat-icon>add</mat-icon>
       Incluir
     </a>
-  </header>
+  </app-page-header>
 
   @if (processingId) {
     <mat-progress-bar mode="indeterminate"></mat-progress-bar>

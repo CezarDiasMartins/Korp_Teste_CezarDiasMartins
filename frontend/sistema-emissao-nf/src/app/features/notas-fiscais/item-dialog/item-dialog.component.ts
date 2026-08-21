@@ -1,17 +1,13 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { Produto } from '../../../core/models/produto';
 import { NotaFiscalItem } from '../../../core/models/nota-fiscal';
-
-export interface ItemDialogData {
-  produtos: Produto[];
-}
+import { ItemDialogData } from './item-dialog.type';
 
 @Component({
   selector: 'app-item-dialog',
@@ -21,15 +17,13 @@ export interface ItemDialogData {
   styleUrl: './item-dialog.component.scss'
 })
 export class ItemDialogComponent {
+  private readonly dialogRef = inject(MatDialogRef<ItemDialogComponent>);
+  readonly data = inject<ItemDialogData>(MAT_DIALOG_DATA);
+
   form = new FormGroup({
     produtoId: new FormControl<number | null>(null, [Validators.required]),
     quantidade: new FormControl<number | null>(1, [Validators.required, Validators.min(1)])
   });
-
-  constructor(
-    private readonly dialogRef: MatDialogRef<ItemDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public readonly data: ItemDialogData
-  ) {}
 
   confirm() {
     if (this.form.invalid) {

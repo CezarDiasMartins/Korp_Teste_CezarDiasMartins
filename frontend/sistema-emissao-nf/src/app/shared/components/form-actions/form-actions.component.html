@@ -1,0 +1,13 @@
+<div class="actions">
+  <a mat-stroked-button [routerLink]="backLink()">
+    <mat-icon>{{ backIcon() }}</mat-icon>
+    {{ backLabel() }}
+  </a>
+
+  @if (showPrimary()) {
+    <button mat-flat-button color="primary" type="button" (click)="primaryClick.emit()">
+      <mat-icon>{{ primaryIcon() }}</mat-icon>
+      {{ primaryLabel() }}
+    </button>
+  }
+</div>

@@ -1,37 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { NotaFiscalItem } from '../../../core/models/nota-fiscal';
 import { Produto } from '../../../core/models/produto';
 import { FeedbackService } from '../../../core/services/feedback.service';
 import { NotaFiscalService } from '../../../core/services/nota-fiscal.service';
 import { ProdutoService } from '../../../core/services/produto.service';
+import { FormActionsComponent } from '../../../shared/components/form-actions/form-actions.component';
 import { LoadingComponent } from '../../../shared/components/loading/loading.component';
+import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
 import { ItemDialogComponent } from '../item-dialog/item-dialog.component';
 
 @Component({
   selector: 'app-nota-fiscal-form',
   standalone: true,
-  imports: [MatButtonModule, MatDialogModule, MatIconModule, MatTableModule, RouterLink, LoadingComponent],
+  imports: [MatButtonModule, MatDialogModule, MatIconModule, MatTableModule, FormActionsComponent, LoadingComponent, PageHeaderComponent],
   templateUrl: './nota-fiscal-form.component.html',
   styleUrl: './nota-fiscal-form.component.scss'
 })
 export class NotaFiscalFormComponent implements OnInit {
+  private readonly dialog = inject(MatDialog);
+  private readonly router = inject(Router);
+  private readonly notaFiscalService = inject(NotaFiscalService);
+  private readonly produtoService = inject(ProdutoService);
+  private readonly feedback = inject(FeedbackService);
+
   displayedColumns = ['produto', 'quantidade', 'acao'];
   produtos: Produto[] = [];
   itens: NotaFiscalItem[] = [];
   loading = false;
-
-  constructor(
-    private readonly dialog: MatDialog,
-    private readonly router: Router,
-    private readonly notaFiscalService: NotaFiscalService,
-    private readonly produtoService: ProdutoService,
-    private readonly feedback: FeedbackService
-  ) {}
 
   ngOnInit() {
     this.loading = true;
