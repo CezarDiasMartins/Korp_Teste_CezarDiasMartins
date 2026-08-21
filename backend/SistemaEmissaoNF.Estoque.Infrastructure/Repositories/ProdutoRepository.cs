@@ -27,7 +27,7 @@ public class ProdutoRepository(EstoqueDbContext dbContext)
 
             if (produto is null)
             {
-                errors.Add($"Produto {item.ProdutoId} nao encontrado.");
+                errors.Add($"Produto {item.ProdutoId} não encontrado.");
                 break;
             }
 

@@ -25,7 +25,7 @@ public class CreateProdutoCommandHandler(
 
         if (await produtoRepository.CodigoExistsAsync(request.Codigo, null, cancellationToken))
         {
-            response.Errors.Add("Ja existe um produto cadastrado com este codigo.");
+            response.Errors.Add("Já existe um produto cadastrado com este código.");
             return response;
         }
 

@@ -52,7 +52,7 @@ export class NotaFiscalFormComponent implements OnInit {
     const produtosDisponiveis = this.produtos.filter(x => !selected.has(x.id));
 
     if (produtosDisponiveis.length === 0) {
-      this.feedback.error('Nao ha produtos disponiveis para incluir.');
+      this.feedback.error('Não há produtos disponíveis para incluir.');
       return;
     }
 
@@ -60,9 +60,8 @@ export class NotaFiscalFormComponent implements OnInit {
       width: '520px',
       data: { produtos: produtosDisponiveis }
     }).afterClosed().subscribe((item?: NotaFiscalItem) => {
-      if (item) {
+      if (item)
         this.itens = [...this.itens, item];
-      }
     });
   }
 

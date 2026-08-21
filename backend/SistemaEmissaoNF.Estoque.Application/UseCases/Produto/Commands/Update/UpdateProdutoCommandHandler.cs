@@ -26,13 +26,13 @@ public class UpdateProdutoCommandHandler(
         var produto = await produtoRepository.GetByIdAsync(request.Id, cancellationToken);
         if (produto is null)
         {
-            response.Errors.Add("Produto nao encontrado.");
+            response.Errors.Add("Produto não encontrado.");
             return response;
         }
 
         if (await produtoRepository.CodigoExistsAsync(request.Codigo, request.Id, cancellationToken))
         {
-            response.Errors.Add("Ja existe um produto cadastrado com este codigo.");
+            response.Errors.Add("Já existe um produto cadastrado com este código.");
             return response;
         }
 

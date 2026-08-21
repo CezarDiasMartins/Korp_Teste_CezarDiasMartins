@@ -2,7 +2,7 @@
 
 ## Arquitetura
 
-O sistema possui dois microsservicos de negocio: Estoque e Faturamento. Cada um tem seu proprio dominio, Application, Infrastructure, API e banco PostgreSQL. O projeto `Faturamento.Worker` nao e um terceiro microsservico; ele e outro processo do contexto de Faturamento usado para tarefas de background.
+O sistema possui dois microsserviços de negócio: Estoque e Faturamento. Cada um tem seu proprio dominio, Application, Infrastructure, API e banco PostgreSQL. O projeto `Faturamento.Worker` não é um terceiro microsserviço; ele e outro processo do contexto de Faturamento usado para tarefas de background.
 
 ## .NET, CQRS e Mediator
 
@@ -10,11 +10,11 @@ As APIs ASP.NET Core recebem HTTP, montam Commands ou Queries e delegam para o M
 
 ## Entity Framework Core, LINQ e PostgreSQL
 
-O EF Core usa Fluent API para mapear tabelas, chaves, indices unicos, relacionamentos e tipos `char(1)` dos status. O Estoque grava em `estoque_db`; Faturamento grava em `faturamento_db`. Nao existem foreign keys entre Produto e NotaFiscalItem porque Produto pertence ao microsservico Estoque.
+O EF Core usa Fluent API para mapear tabelas, chaves, indices unicos, relacionamentos e tipos `char(1)` dos status. O Estoque grava em `estoque_db`; Faturamento grava em `faturamento_db`. Não éxistem foreign keys entre Produto e NotaFiscalItem porque Produto pertence ao microsserviço Estoque.
 
 ## Numeracao Sequencial
 
-Faturamento usa a sequence PostgreSQL `nota_fiscal_numero_seq`. O numero nao e calculado no Angular e nao depende de `MAX(numero) + 1`, evitando duplicidade em criacoes concorrentes simples.
+Faturamento usa a sequence PostgreSQL `nota_fiscal_numero_seq`. O número não é calculado no Angular e não depende de `MAX(numero) + 1`, evitando duplicidade em criações concorrentes simples.
 
 ## HttpClient
 
@@ -44,4 +44,4 @@ O PDF fica salvo no PostgreSQL como `byte[]` para manter o teste autocontido. Em
 
 ## Testes
 
-Os testes unitarios cobrem validacoes, duplicidade, baixa atomica, criacao/impressao de NF, falha do Estoque e geracao de PDF sem RabbitMQ real.
+Os testes unitários cobrem validações, duplicidade, baixa atômica, criação/impressão de NF, falha do Estoque e geração de PDF sem RabbitMQ real.

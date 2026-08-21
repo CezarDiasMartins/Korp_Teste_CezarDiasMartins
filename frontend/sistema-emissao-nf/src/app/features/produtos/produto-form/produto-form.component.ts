@@ -38,31 +38,27 @@ export class ProdutoFormComponent implements OnInit {
     this.id = Number(this.route.snapshot.paramMap.get('id')) || undefined;
     this.readonly = this.route.snapshot.routeConfig?.path?.includes('visualizar') ?? false;
 
-    if (this.id) {
+    if (this.id)
       this.load(this.id);
-    }
 
-    if (this.readonly) {
+    if (this.readonly)
       this.form.disable();
-    }
   }
 
   get title() {
-    if (this.readonly) {
+    if (this.readonly)
       return 'Visualizar Produto';
-    }
 
     return this.id ? 'Alterar Produto' : 'Novo Produto';
   }
 
   save() {
-    if (this.readonly) {
+    if (this.readonly)
       return;
-    }
 
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      this.feedback.error('Verifique os campos obrigatorios.');
+      this.feedback.error('Verifique os campos obrigatórios.');
       return;
     }
 
@@ -104,7 +100,7 @@ export class ProdutoFormComponent implements OnInit {
       },
       error: () => {
         this.loading = false;
-        this.feedback.error('Produto nao encontrado.');
+        this.feedback.error('Produto não encontrado.');
       }
     });
   }

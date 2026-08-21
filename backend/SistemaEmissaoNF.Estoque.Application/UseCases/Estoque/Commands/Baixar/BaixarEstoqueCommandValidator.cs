@@ -8,11 +8,11 @@ public class BaixarEstoqueCommandValidator : AbstractValidator<BaixarEstoqueComm
     {
         RuleFor(x => x.NotaFiscalId)
             .GreaterThan(0)
-            .WithMessage("Informe uma nota fiscal valida.");
+            .WithMessage("Informe uma nota fiscal válida.");
 
         RuleFor(x => x.CorrelationId)
             .NotEmpty()
-            .WithMessage("Informe o identificador de correlacao.");
+            .WithMessage("Informe o identificador de correlação.");
 
         RuleFor(x => x.Itens)
             .NotEmpty()
@@ -22,11 +22,11 @@ public class BaixarEstoqueCommandValidator : AbstractValidator<BaixarEstoqueComm
         {
             item.RuleFor(x => x.ProdutoId)
                 .GreaterThan(0)
-                .WithMessage("Informe um produto valido.");
+                .WithMessage("Informe um produto válido.");
 
             item.RuleFor(x => x.Quantidade)
                 .GreaterThan(0)
-                .WithMessage("Informe uma quantidade valida.");
+                .WithMessage("Informe uma quantidade válida.");
         });
     }
 }

@@ -41,7 +41,7 @@ export class NotaFiscalDetailComponent implements OnInit {
       },
       error: () => {
         this.loading = false;
-        this.feedback.error('Nota fiscal nao encontrada.');
+        this.feedback.error('Nota fiscal não encontrada.');
       }
     });
   }

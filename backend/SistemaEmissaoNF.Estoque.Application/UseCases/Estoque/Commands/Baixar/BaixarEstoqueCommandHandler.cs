@@ -23,7 +23,7 @@ public class BaixarEstoqueCommandHandler(
 
         if (request.Itens.GroupBy(x => x.ProdutoId).Any(x => x.Count() > 1))
         {
-            response.Errors.Add("Nao e permitido baixar o mesmo produto mais de uma vez na mesma nota fiscal.");
+            response.Errors.Add("Não é permitido baixar o mesmo produto mais de uma vez na mesma nota fiscal.");
             return response;
         }
 

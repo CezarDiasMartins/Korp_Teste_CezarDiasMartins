@@ -13,13 +13,13 @@ public class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<Exception
         }
         catch (Exception exception)
         {
-            logger.LogError(exception, "Erro nao tratado na API de Faturamento.");
+            logger.LogError(exception, "Erro não tratado na API de Faturamento.");
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             context.Response.ContentType = "application/json";
 
             await context.Response.WriteAsJsonAsync(new GenericNoDataResponse
             {
-                Errors = ["Ocorreu um erro interno ao processar a requisicao."]
+                Errors = ["Ocorreu um erro interno ao processar a requisição."]
             });
         }
     }

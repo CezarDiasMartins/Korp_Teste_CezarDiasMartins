@@ -14,19 +14,19 @@ public class CreateNotaFiscalCommandValidator : AbstractValidator<CreateNotaFisc
         {
             item.RuleFor(x => x.ProdutoId)
                 .GreaterThan(0)
-                .WithMessage("Informe um produto valido.");
+                .WithMessage("Informe um produto válido.");
 
             item.RuleFor(x => x.ProdutoCodigo)
                 .GreaterThan(0)
-                .WithMessage("Informe o codigo do produto.");
+                .WithMessage("Informe o código do produto.");
 
             item.RuleFor(x => x.ProdutoDescricao)
                 .NotEmpty()
-                .WithMessage("Informe a descricao do produto.");
+                .WithMessage("Informe a descrição do produto.");
 
             item.RuleFor(x => x.Quantidade)
                 .GreaterThan(0)
-                .WithMessage("Informe uma quantidade valida.");
+                .WithMessage("Informe uma quantidade válida.");
         });
     }
 }

@@ -94,9 +94,8 @@ export class NotaFiscalListComponent implements OnInit {
         this.load();
       })
     ).subscribe(response => {
-      if (!response.body) {
+      if (!response.body)
         return;
-      }
 
       const url = URL.createObjectURL(response.body);
       window.open(url, '_blank');

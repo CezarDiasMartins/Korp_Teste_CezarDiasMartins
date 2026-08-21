@@ -15,7 +15,7 @@ public class GetNotaFiscalPdfQueryHandler(INotaFiscalRepository notaFiscalReposi
 
         if (notaFiscal is null)
         {
-            response.Errors.Add("Nota fiscal nao encontrada.");
+            response.Errors.Add("Nota fiscal não encontrada.");
             return response;
         }
 
@@ -27,7 +27,7 @@ public class GetNotaFiscalPdfQueryHandler(INotaFiscalRepository notaFiscalReposi
             {
                 StatusImpressao.Concluido when notaFiscal.PdfArquivo is not null => "PDF gerado com sucesso.",
                 StatusImpressao.Erro => "Falha ao gerar o PDF da nota fiscal.",
-                _ => "PDF ainda esta sendo gerado."
+                _ => "PDF ainda está sendo gerado."
             }
         };
 

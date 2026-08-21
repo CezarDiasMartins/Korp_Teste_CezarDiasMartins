@@ -40,16 +40,12 @@ public class NotasFiscaisController(IMediator mediator) : ControllerBase
         var response = await mediator.Send(new PrintNotaFiscalCommand { Id = id }, cancellationToken);
 
         if (response.Success)
-        {
             return Ok(response);
-        }
 
         if (response.ServiceUnavailable)
-        {
             return StatusCode(StatusCodes.Status503ServiceUnavailable, response);
-        }
 
-        return response.Errors.Any(x => x.Contains("nao encontrada", StringComparison.OrdinalIgnoreCase))
+        return response.Errors.Any(x => x.Contains("não encontrada", StringComparison.OrdinalIgnoreCase))
             ? NotFound(response)
             : BadRequest(response);
     }
@@ -60,9 +56,7 @@ public class NotasFiscaisController(IMediator mediator) : ControllerBase
         var response = await mediator.Send(new GetNotaFiscalPdfQuery { Id = id }, cancellationToken);
 
         if (!response.Success || response.Data is null)
-        {
             return NotFound(response);
-        }
 
         if (response.Data.StatusImpressao == StatusImpressao.Concluido && response.Data.PdfArquivo is not null)
         {

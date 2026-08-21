@@ -27,7 +27,7 @@ public class CreateNotaFiscalCommandHandler(
 
         if (request.Itens.GroupBy(x => x.ProdutoId).Any(x => x.Count() > 1))
         {
-            response.Errors.Add("Nao e permitido informar o mesmo produto mais de uma vez.");
+            response.Errors.Add("Não é permitido informar o mesmo produto mais de uma vez.");
             return response;
         }
 

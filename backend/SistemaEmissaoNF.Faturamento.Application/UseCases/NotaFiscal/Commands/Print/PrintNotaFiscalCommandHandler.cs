@@ -18,13 +18,13 @@ public class PrintNotaFiscalCommandHandler(
 
         if (notaFiscal is null)
         {
-            response.Errors.Add("Nota fiscal nao encontrada.");
+            response.Errors.Add("Nota fiscal não encontrada.");
             return response;
         }
 
         if (notaFiscal.Status == StatusNotaFiscal.Fechada)
         {
-            response.Errors.Add("Nota fiscal ja esta fechada.");
+            response.Errors.Add("Nota fiscal já está fechada.");
             return response;
         }
 

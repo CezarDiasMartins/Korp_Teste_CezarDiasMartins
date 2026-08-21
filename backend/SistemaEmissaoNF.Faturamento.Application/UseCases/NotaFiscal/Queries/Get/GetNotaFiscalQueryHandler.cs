@@ -16,7 +16,7 @@ public class GetNotaFiscalQueryHandler(INotaFiscalRepository notaFiscalRepositor
 
         if (notaFiscal is null)
         {
-            response.Errors.Add("Nota fiscal nao encontrada.");
+            response.Errors.Add("Nota fiscal não encontrada.");
             return response;
         }
 

@@ -34,9 +34,7 @@ public static class DependencyInjection
         services.AddMassTransit(bus =>
         {
             if (addWorkerConsumer)
-            {
                 bus.AddConsumer<GerarNotaFiscalPdfConsumer>();
-            }
 
             bus.UsingRabbitMq((context, cfg) =>
             {

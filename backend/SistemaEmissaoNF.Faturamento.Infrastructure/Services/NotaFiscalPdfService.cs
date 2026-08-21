@@ -17,7 +17,7 @@ public class NotaFiscalPdfService(
         var notaFiscal = await notaFiscalRepository.GetWithItensAsync(notaFiscalId, cancellationToken);
         if (notaFiscal is null)
         {
-            logger.LogWarning("Nota fiscal {NotaFiscalId} nao encontrada para geracao de PDF.", notaFiscalId);
+            logger.LogWarning("Nota fiscal {NotaFiscalId} não encontrada para geração de PDF.", notaFiscalId);
             return;
         }
 
@@ -38,7 +38,7 @@ public class NotaFiscalPdfService(
                     {
                         column.Spacing(12);
                         column.Item().Text("NOTA FISCAL").Bold().FontSize(20);
-                        column.Item().Text($"Numero: {notaFiscal.NumeroSequencial:D6}");
+                        column.Item().Text($"Número: {notaFiscal.NumeroSequencial:D6}");
                         column.Item().Text("Status: Fechada");
                         column.Item().LineHorizontal(1);
                         column.Item().Table(table =>
@@ -52,8 +52,8 @@ public class NotaFiscalPdfService(
 
                             table.Header(header =>
                             {
-                                header.Cell().Text("Codigo").Bold();
-                                header.Cell().Text("Descricao").Bold();
+                                header.Cell().Text("Código").Bold();
+                                header.Cell().Text("Descrição").Bold();
                                 header.Cell().Text("Quantidade").Bold();
                             });
 

@@ -1,6 +1,6 @@
-# Sistema de Emissao de Notas Fiscais
+# Sistema de Emissão de Notas Fiscais
 
-Aplicacao de teste tecnico com Angular 20 no frontend, C#/.NET 10 no backend, dois microsservicos de negocio, PostgreSQL, HTTP entre servicos, RabbitMQ e Worker para geracao assincrona de PDF.
+Aplicação de teste técnico com Angular 20 no frontend, C#/.NET 10 no backend, dois microsserviços de negócio, PostgreSQL, HTTP entre serviços, RabbitMQ e Worker para geração assíncrona de PDF.
 
 ## Arquitetura
 
@@ -10,15 +10,15 @@ Aplicacao de teste tecnico com Angular 20 no frontend, C#/.NET 10 no backend, do
 - `estoque_db`: banco exclusivo do Estoque.
 - `faturamento_db`: banco exclusivo do Faturamento.
 
-Faturamento nao acessa banco, DbContext ou repository de Estoque. A baixa de estoque acontece por HTTP.
+Faturamento não acessa banco, DbContext ou repository de Estoque. A baixa de estoque acontece por HTTP.
 
 ## Por Que HTTP e RabbitMQ
 
-HTTP e usado na baixa de estoque porque Faturamento precisa saber imediatamente se o saldo foi baixado antes de fechar a nota.
+HTTP é usado na baixa de estoque porque Faturamento precisa saber imediatamente se o saldo foi baixado antes de fechar a nota.
 
-RabbitMQ e usado na geracao do PDF porque o PDF e um processamento secundario. A API fecha a NF, publica uma mensagem pequena na fila `gerar-nota-fiscal-pdf` e o Worker processa em background.
+RabbitMQ e usado na geração do PDF porque o PDF e um processamento secundário. A API fecha a NF, publica uma mensagem pequena na fila `gerar-nota-fiscal-pdf` e o Worker processa em background.
 
-Se o Worker estiver temporariamente indisponivel, a mensagem permanece na fila e sera processada quando ele voltar.
+Se o Worker estiver temporariamente indisponível, a mensagem permanece na fila e será processada quando ele voltar.
 
 ## Como Executar
 
@@ -35,13 +35,13 @@ dotnet ef database update -p backend/SistemaEmissaoNF.Estoque.Infrastructure -s 
 dotnet ef database update -p backend/SistemaEmissaoNF.Faturamento.Infrastructure -s backend/SistemaEmissaoNF.Faturamento.Api
 ```
 
-Se o comando `dotnet ef` nao existir, instale a ferramenta:
+Se o comando `dotnet ef` não existir, instale a ferramenta:
 
 ```bash
 dotnet tool install --global dotnet-ef
 ```
 
-No Windows, se a ferramenta foi instalada mas ainda nao entrou no `PATH`, rode usando o caminho completo:
+No Windows, se a ferramenta foi instalada mas ainda não entrou no `PATH`, rode usando o caminho completo:
 
 ```powershell
 & "$env:USERPROFILE\.dotnet\tools\dotnet-ef.exe" database update -p backend/SistemaEmissaoNF.Estoque.Infrastructure -s backend/SistemaEmissaoNF.Estoque.Api
@@ -84,9 +84,9 @@ URLs locais:
 
 ### Problema Com Docker Desktop
 
-Se `docker compose up -d` retornar erro parecido com `open //./pipe/dockerDesktopLinuxEngine: O sistema nao pode encontrar o arquivo especificado`, o Docker CLI esta instalado, mas o Docker Desktop/engine Linux nao esta rodando.
+Se `docker compose up -d` retornar erro parecido com `open //./pipe/dockerDesktopLinuxEngine: O sistema não pode encontrar o arquivo especificado`, o Docker CLI está instalado, mas o Docker Desktop/engine Linux não está rodando.
 
-Abra o Docker Desktop, aguarde aparecer que o engine esta em execucao e rode:
+Abra o Docker Desktop, aguarde aparecer que o engine está em execução e rode:
 
 ```bash
 docker context use desktop-linux
@@ -116,25 +116,25 @@ npm run build
 3. A NF nasce `Aberta` com numero sequencial gerado pelo backend.
 4. Clique em imprimir.
 5. Faturamento chama Estoque por HTTP.
-6. Estoque baixa saldo em transacao local.
+6. Estoque baixa saldo em transação local.
 7. Faturamento fecha a NF.
 8. Faturamento publica `GerarNotaFiscalPdfCommand` no RabbitMQ.
 9. Worker consome a mensagem, gera o PDF e salva em `faturamento_db`.
 10. Angular faz polling e abre o PDF quando receber `200 OK`.
 
-## Cenario de Falha do Estoque
+## Cenário de Falha do Estoque
 
 1. Crie uma NF aberta.
 2. Pare `SistemaEmissaoNF.Estoque.Api`.
 3. Clique em imprimir no Angular.
-4. Faturamento retornara `503 Service Unavailable`.
+4. Faturamento retornará `503 Service Unavailable`.
 5. A NF permanecera Aberta.
 6. Suba o Estoque novamente e clique em imprimir outra vez.
 
 Mensagem esperada no frontend:
 
 ```text
-Nao foi possivel comunicar com o servico de estoque.
+Não foi possível comunicar com o serviço de estoque.
 A Nota Fiscal permanece aberta.
 Tente novamente.
 ```
@@ -144,13 +144,13 @@ Tente novamente.
 1. Mantenha RabbitMQ, Estoque e Faturamento ativos.
 2. Pare `SistemaEmissaoNF.Faturamento.Worker`.
 3. Imprima uma NF.
-4. A NF sera fechada e a mensagem ficara aguardando na fila `gerar-nota-fiscal-pdf`.
+4. A NF será fechada e a mensagem ficara aguardando na fila `gerar-nota-fiscal-pdf`.
 5. Inicie o Worker.
 6. O Worker consumira a mensagem e gerara o PDF.
 
 ## PDF
 
-Para simplificar a execucao local do teste tecnico, o PDF foi persistido no PostgreSQL. Em um ambiente produtivo com grande volume de arquivos, seria preferivel utilizar um servico de object storage.
+Para simplificar a execução local do teste técnico, o PDF foi persistido no PostgreSQL. Em um ambiente produtivo com grande volume de arquivos, seria preferível utilizar um serviço de object storage.
 
 ## Tecnologias
 

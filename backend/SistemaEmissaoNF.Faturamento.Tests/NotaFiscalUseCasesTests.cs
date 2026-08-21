@@ -47,7 +47,7 @@ public class NotaFiscalUseCasesTests
         var response = await handler.Handle(command, CancellationToken.None);
 
         Assert.False(response.Success);
-        Assert.Contains("Informe uma quantidade valida.", response.Errors);
+        Assert.Contains("Informe uma quantidade válida.", response.Errors);
     }
 
     [Fact]
@@ -66,7 +66,7 @@ public class NotaFiscalUseCasesTests
         var response = await handler.Handle(command, CancellationToken.None);
 
         Assert.False(response.Success);
-        Assert.Contains("Nao e permitido informar o mesmo produto mais de uma vez.", response.Errors);
+        Assert.Contains("Não é permitido informar o mesmo produto mais de uma vez.", response.Errors);
     }
 
     [Fact]
@@ -79,7 +79,7 @@ public class NotaFiscalUseCasesTests
         var response = await handler.Handle(new PrintNotaFiscalCommand { Id = 1 }, CancellationToken.None);
 
         Assert.False(response.Success);
-        Assert.Contains("Nota fiscal ja esta fechada.", response.Errors);
+        Assert.Contains("Nota fiscal já está fechada.", response.Errors);
     }
 
     [Fact]
@@ -89,7 +89,7 @@ public class NotaFiscalUseCasesTests
         var estoqueService = new FakeEstoqueService(new BaixaEstoqueResponse
         {
             ServiceUnavailable = true,
-            Errors = ["Nao foi possivel comunicar com o servico de estoque."]
+            Errors = ["Não foi possível comunicar com o serviço de estoque."]
         });
         var handler = new PrintNotaFiscalCommandHandler(new FakeNotaFiscalRepository(nota), estoqueService, new FakePdfPublisher());
 

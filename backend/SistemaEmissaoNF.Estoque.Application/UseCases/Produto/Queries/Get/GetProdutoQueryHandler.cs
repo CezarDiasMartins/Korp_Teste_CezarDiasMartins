@@ -15,7 +15,7 @@ public class GetProdutoQueryHandler(IProdutoRepository produtoRepository, IMappe
 
         if (produto is null)
         {
-            response.Errors.Add("Produto nao encontrado.");
+            response.Errors.Add("Produto não encontrado.");
             return response;
         }
 

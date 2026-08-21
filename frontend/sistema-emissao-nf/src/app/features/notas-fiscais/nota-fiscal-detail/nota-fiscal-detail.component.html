@@ -3,7 +3,7 @@
     <div>
       <h1>Visualizar Nota Fiscal</h1>
       @if (nota) {
-        <p>Numero {{ nota.numeroFormatado }}</p>
+        <p>Número {{ nota.numeroFormatado }}</p>
       }
     </div>
     <a mat-stroked-button routerLink="/notas-fiscais">
@@ -21,7 +21,7 @@
         <strong>{{ nota.statusDescricao }}</strong>
       </div>
       <div>
-        <span>Impressao</span>
+        <span>Impressão</span>
         <strong>{{ nota.status === 'A' ? '-' : nota.statusImpressaoDescricao }}</strong>
       </div>
     </div>

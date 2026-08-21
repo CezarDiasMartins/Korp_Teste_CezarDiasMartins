@@ -8,18 +8,18 @@ public class UpdateProdutoCommandValidator : AbstractValidator<UpdateProdutoComm
     {
         RuleFor(x => x.Id)
             .GreaterThan(0)
-            .WithMessage("Informe um produto valido.");
+            .WithMessage("Informe um produto válido.");
 
         RuleFor(x => x.Codigo)
             .GreaterThan(0)
-            .WithMessage("Informe um codigo valido.");
+            .WithMessage("Informe um código válido.");
 
         RuleFor(x => x.Descricao)
             .NotEmpty()
-            .WithMessage("Informe a descricao do produto.");
+            .WithMessage("Informe a descrição do produto.");
 
         RuleFor(x => x.Saldo)
             .GreaterThanOrEqualTo(0)
-            .WithMessage("O saldo nao pode ser negativo.");
+            .WithMessage("O saldo não pode ser negativo.");
     }
 }

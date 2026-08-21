@@ -19,7 +19,7 @@ public static class NotaFiscalMapper
             {
                 StatusImpressao.Pendente => "Pendente",
                 StatusImpressao.Gerando => "Gerando",
-                StatusImpressao.Concluido => "Concluida",
+                StatusImpressao.Concluido => "Concluída",
                 StatusImpressao.Erro => "Erro",
                 _ => notaFiscal.StatusImpressao.ToString()
             },

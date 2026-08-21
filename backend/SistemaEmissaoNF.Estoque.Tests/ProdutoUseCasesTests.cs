@@ -34,9 +34,9 @@ public class ProdutoUseCasesTests
     }
 
     [Theory]
-    [InlineData(0, "Produto", 1, "Informe um codigo valido.")]
-    [InlineData(1, "", 1, "Informe a descricao do produto.")]
-    [InlineData(1, "Produto", -1, "O saldo nao pode ser negativo.")]
+    [InlineData(0, "Produto", 1, "Informe um código válido.")]
+    [InlineData(1, "", 1, "Informe a descrição do produto.")]
+    [InlineData(1, "Produto", -1, "O saldo não pode ser negativo.")]
     public async Task CreateProduto_DeveValidarCampos(long codigo, string descricao, int saldo, string erroEsperado)
     {
         var handler = new CreateProdutoCommandHandler(
@@ -69,7 +69,7 @@ public class ProdutoUseCasesTests
         }, CancellationToken.None);
 
         Assert.False(response.Success);
-        Assert.Contains("Ja existe um produto cadastrado com este codigo.", response.Errors);
+        Assert.Contains("Já existe um produto cadastrado com este código.", response.Errors);
     }
 
     [Fact]
