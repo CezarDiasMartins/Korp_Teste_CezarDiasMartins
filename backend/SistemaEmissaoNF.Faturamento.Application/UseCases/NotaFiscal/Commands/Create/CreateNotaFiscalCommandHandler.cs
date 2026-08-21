@@ -1,4 +1,3 @@
-using FluentValidation;
 using MediatR;
 using SistemaEmissaoNF.Faturamento.Application.Interfaces;
 using SistemaEmissaoNF.Faturamento.Application.Response;
@@ -10,21 +9,12 @@ using SistemaEmissaoNF.Faturamento.Domain.Enums;
 namespace SistemaEmissaoNF.Faturamento.Application.UseCases.NotaFiscal.Commands.Create;
 
 public class CreateNotaFiscalCommandHandler(
-    INotaFiscalRepository notaFiscalRepository,
-    IValidator<CreateNotaFiscalCommand> validator)
+    INotaFiscalRepository notaFiscalRepository)
     : IRequestHandler<CreateNotaFiscalCommand, GenericDataResponse<NotaFiscalResponse>>
 {
     public async Task<GenericDataResponse<NotaFiscalResponse>> Handle(CreateNotaFiscalCommand request, CancellationToken cancellationToken)
     {
         var response = new GenericDataResponse<NotaFiscalResponse>();
-        var validation = await validator.ValidateAsync(request, cancellationToken);
-
-        if (!validation.IsValid)
-        {
-            response.Errors.AddRange(validation.Errors.Select(x => x.ErrorMessage));
-            return response;
-        }
-
         if (request.Itens.GroupBy(x => x.ProdutoId).Any(x => x.Count() > 1))
         {
             response.Errors.Add("Não é permitido informar o mesmo produto mais de uma vez.");

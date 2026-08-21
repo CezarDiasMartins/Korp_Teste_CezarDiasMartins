@@ -1,8 +1,11 @@
 using System.Linq.Expressions;
+using FluentValidation;
 using Mapster;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using SistemaEmissaoNF.Estoque.Application.Behaviors;
 using SistemaEmissaoNF.Estoque.Application.Interfaces;
+using SistemaEmissaoNF.Estoque.Application.Response;
 using SistemaEmissaoNF.Estoque.Application.Services;
 using SistemaEmissaoNF.Estoque.Application.UseCases.Estoque.Commands.Baixar;
 using SistemaEmissaoNF.Estoque.Application.UseCases.Produto.Commands.Create;
@@ -19,7 +22,7 @@ public class ProdutoUseCasesTests
     public async Task CreateProduto_DeveCriarProdutoValido()
     {
         var repository = new FakeProdutoRepository();
-        var handler = new CreateProdutoCommandHandler(repository, new Mapper(TypeAdapterConfig.GlobalSettings), new CreateProdutoCommandValidator());
+        var handler = new CreateProdutoCommandHandler(repository, new Mapper(TypeAdapterConfig.GlobalSettings));
 
         var response = await handler.Handle(new CreateProdutoCommand
         {
@@ -39,17 +42,16 @@ public class ProdutoUseCasesTests
     [InlineData(1, "Produto", -1, "O saldo não pode ser negativo.")]
     public async Task CreateProduto_DeveValidarCampos(long codigo, string descricao, int saldo, string erroEsperado)
     {
-        var handler = new CreateProdutoCommandHandler(
-            new FakeProdutoRepository(),
-            new Mapper(TypeAdapterConfig.GlobalSettings),
-            new CreateProdutoCommandValidator());
-
-        var response = await handler.Handle(new CreateProdutoCommand
+        var command = new CreateProdutoCommand
         {
             Codigo = codigo,
             Descricao = descricao,
             Saldo = saldo
-        }, CancellationToken.None);
+        };
+
+        var response = await ValidateAsync<CreateProdutoCommand, GenericDataResponse<Application.UseCases.Produto.Response.ProdutoResponse>>(
+            command,
+            [new CreateProdutoCommandValidator()]);
 
         Assert.False(response.Success);
         Assert.Contains(erroEsperado, response.Errors);
@@ -59,7 +61,7 @@ public class ProdutoUseCasesTests
     public async Task CreateProduto_DeveBloquearCodigoDuplicado()
     {
         var repository = new FakeProdutoRepository(new Produto { Id = 1, Codigo = 1001, Descricao = "Produto A", Saldo = 5 });
-        var handler = new CreateProdutoCommandHandler(repository, new Mapper(TypeAdapterConfig.GlobalSettings), new CreateProdutoCommandValidator());
+        var handler = new CreateProdutoCommandHandler(repository, new Mapper(TypeAdapterConfig.GlobalSettings));
 
         var response = await handler.Handle(new CreateProdutoCommand
         {
@@ -76,7 +78,7 @@ public class ProdutoUseCasesTests
     public async Task UpdateProduto_DeveAlterarProduto()
     {
         var repository = new FakeProdutoRepository(new Produto { Id = 1, Codigo = 1001, Descricao = "Produto A", Saldo = 5 });
-        var handler = new UpdateProdutoCommandHandler(repository, new Mapper(TypeAdapterConfig.GlobalSettings), new UpdateProdutoCommandValidator());
+        var handler = new UpdateProdutoCommandHandler(repository, new Mapper(TypeAdapterConfig.GlobalSettings));
 
         var response = await handler.Handle(new UpdateProdutoCommand
         {
@@ -132,6 +134,21 @@ public class ProdutoUseCasesTests
         Assert.Equal(1, (await dbContext.Produtos.FindAsync(2))!.Saldo);
     }
 
+    private static async Task<TResponse> ValidateAsync<TRequest, TResponse>(TRequest request, IEnumerable<IValidator<TRequest>> validators)
+        where TRequest : notnull
+        where TResponse : IResponse, new()
+    {
+        var nextWasCalled = false;
+        var behavior = new ValidationBehavior<TRequest, TResponse>(validators);
+        var response = await behavior.Handle(request, _ =>
+        {
+            nextWasCalled = true;
+            return Task.FromResult(new TResponse());
+        }, CancellationToken.None);
+
+        Assert.False(nextWasCalled);
+        return response;
+    }
     private static async Task<EstoqueDbContext> CreateDbContextAsync()
     {
         var connection = new SqliteConnection("DataSource=:memory:");

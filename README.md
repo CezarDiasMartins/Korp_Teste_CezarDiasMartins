@@ -139,7 +139,7 @@ A Nota Fiscal permanece aberta.
 Tente novamente.
 ```
 
-## Demonstracao RabbitMQ
+## Demonstração RabbitMQ
 
 1. Mantenha RabbitMQ, Estoque e Faturamento ativos.
 2. Pare `SistemaEmissaoNF.Faturamento.Worker`.

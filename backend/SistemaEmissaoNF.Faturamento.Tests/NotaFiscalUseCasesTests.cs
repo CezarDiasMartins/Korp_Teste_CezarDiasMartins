@@ -1,7 +1,10 @@
 using System.Linq.Expressions;
+using FluentValidation;
 using Microsoft.Extensions.Logging.Abstractions;
+using SistemaEmissaoNF.Faturamento.Application.Behaviors;
 using SistemaEmissaoNF.Faturamento.Application.Interfaces;
 using SistemaEmissaoNF.Faturamento.Application.Messaging;
+using SistemaEmissaoNF.Faturamento.Application.Response;
 using SistemaEmissaoNF.Faturamento.Application.UseCases.NotaFiscal.Commands.Create;
 using SistemaEmissaoNF.Faturamento.Application.UseCases.NotaFiscal.Commands.Print;
 using SistemaEmissaoNF.Faturamento.Domain.Entities;
@@ -16,7 +19,7 @@ public class NotaFiscalUseCasesTests
     public async Task CreateNotaFiscal_DeveCriarAberta()
     {
         var repository = new FakeNotaFiscalRepository();
-        var handler = new CreateNotaFiscalCommandHandler(repository, new CreateNotaFiscalCommandValidator());
+        var handler = new CreateNotaFiscalCommandHandler(repository);
 
         var response = await handler.Handle(CreateCommand(), CancellationToken.None);
 
@@ -29,9 +32,9 @@ public class NotaFiscalUseCasesTests
     [Fact]
     public async Task CreateNotaFiscal_DeveBloquearNotaSemItens()
     {
-        var handler = new CreateNotaFiscalCommandHandler(new FakeNotaFiscalRepository(), new CreateNotaFiscalCommandValidator());
+        var handler = new CreateNotaFiscalCommandHandler(new FakeNotaFiscalRepository());
 
-        var response = await handler.Handle(new CreateNotaFiscalCommand(), CancellationToken.None);
+        var response = await ValidateAsync<CreateNotaFiscalCommand, GenericDataResponse<Application.UseCases.NotaFiscal.Response.NotaFiscalResponse>>(new CreateNotaFiscalCommand(), [new CreateNotaFiscalCommandValidator()]);
 
         Assert.False(response.Success);
         Assert.Contains("Informe ao menos um item para a nota fiscal.", response.Errors);
@@ -40,11 +43,11 @@ public class NotaFiscalUseCasesTests
     [Fact]
     public async Task CreateNotaFiscal_DeveBloquearQuantidadeInvalida()
     {
-        var handler = new CreateNotaFiscalCommandHandler(new FakeNotaFiscalRepository(), new CreateNotaFiscalCommandValidator());
+        var handler = new CreateNotaFiscalCommandHandler(new FakeNotaFiscalRepository());
         var command = CreateCommand();
         command.Itens[0].Quantidade = 0;
 
-        var response = await handler.Handle(command, CancellationToken.None);
+        var response = await ValidateAsync<CreateNotaFiscalCommand, GenericDataResponse<Application.UseCases.NotaFiscal.Response.NotaFiscalResponse>>(command, [new CreateNotaFiscalCommandValidator()]);
 
         Assert.False(response.Success);
         Assert.Contains("Informe uma quantidade válida.", response.Errors);
@@ -53,7 +56,7 @@ public class NotaFiscalUseCasesTests
     [Fact]
     public async Task CreateNotaFiscal_DeveBloquearProdutoDuplicado()
     {
-        var handler = new CreateNotaFiscalCommandHandler(new FakeNotaFiscalRepository(), new CreateNotaFiscalCommandValidator());
+        var handler = new CreateNotaFiscalCommandHandler(new FakeNotaFiscalRepository());
         var command = CreateCommand();
         command.Itens.Add(new CreateNotaFiscalItemCommand
         {
@@ -129,6 +132,21 @@ public class NotaFiscalUseCasesTests
         Assert.True(nota.PdfArquivo!.Length > 0);
     }
 
+    private static async Task<TResponse> ValidateAsync<TRequest, TResponse>(TRequest request, IEnumerable<IValidator<TRequest>> validators)
+        where TRequest : notnull
+        where TResponse : IResponse, new()
+    {
+        var nextWasCalled = false;
+        var behavior = new ValidationBehavior<TRequest, TResponse>(validators);
+        var response = await behavior.Handle(request, _ =>
+        {
+            nextWasCalled = true;
+            return Task.FromResult(new TResponse());
+        }, CancellationToken.None);
+
+        Assert.False(nextWasCalled);
+        return response;
+    }
     private static CreateNotaFiscalCommand CreateCommand()
     {
         return new CreateNotaFiscalCommand

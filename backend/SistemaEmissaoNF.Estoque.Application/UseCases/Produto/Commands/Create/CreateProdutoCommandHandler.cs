@@ -1,4 +1,3 @@
-using FluentValidation;
 using MediatR;
 using SistemaEmissaoNF.Estoque.Application.Interfaces;
 using SistemaEmissaoNF.Estoque.Application.Response;
@@ -8,21 +7,12 @@ namespace SistemaEmissaoNF.Estoque.Application.UseCases.Produto.Commands.Create;
 
 public class CreateProdutoCommandHandler(
     IProdutoRepository produtoRepository,
-    IMapper mapper,
-    IValidator<CreateProdutoCommand> validator)
+    IMapper mapper)
     : IRequestHandler<CreateProdutoCommand, GenericDataResponse<ProdutoResponse>>
 {
     public async Task<GenericDataResponse<ProdutoResponse>> Handle(CreateProdutoCommand request, CancellationToken cancellationToken)
     {
         var response = new GenericDataResponse<ProdutoResponse>();
-        var validation = await validator.ValidateAsync(request, cancellationToken);
-
-        if (!validation.IsValid)
-        {
-            response.Errors.AddRange(validation.Errors.Select(x => x.ErrorMessage));
-            return response;
-        }
-
         if (await produtoRepository.CodigoExistsAsync(request.Codigo, null, cancellationToken))
         {
             response.Errors.Add("Já existe um produto cadastrado com este código.");

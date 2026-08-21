@@ -1,4 +1,4 @@
-# Documentacao Tecnica
+# Documentação Técnica
 
 ## Arquitetura
 
@@ -12,7 +12,7 @@ As APIs ASP.NET Core recebem HTTP, montam Commands ou Queries e delegam para o M
 
 O EF Core usa Fluent API para mapear tabelas, chaves, indices unicos, relacionamentos e tipos `char(1)` dos status. O Estoque grava em `estoque_db`; Faturamento grava em `faturamento_db`. Não éxistem foreign keys entre Produto e NotaFiscalItem porque Produto pertence ao microsserviço Estoque.
 
-## Numeracao Sequencial
+## Numeração Sequencial
 
 Faturamento usa a sequence PostgreSQL `nota_fiscal_numero_seq`. O número não é calculado no Angular e não depende de `MAX(numero) + 1`, evitando duplicidade em criações concorrentes simples.
 
@@ -36,11 +36,11 @@ O frontend usa Angular 20 com standalone components, Angular Material, Reactive 
 
 ## Tratamento de Erros
 
-As APIs possuem middleware centralizado de excecoes. Controllers convertem responses em HTTP adequado: 400, 404, 503 e 500. O frontend mostra feedback via snackbar.
+As APIs possuem middleware centralizado de exceções. Controllers convertem responses em HTTP adequado: 400, 404, 503 e 500. O frontend mostra feedback via snackbar.
 
 ## PDF
 
-O PDF fica salvo no PostgreSQL como `byte[]` para manter o teste autocontido. Em producao com alto volume, o ideal seria object storage como S3, Azure Blob ou equivalente.
+O PDF fica salvo no PostgreSQL como `byte[]` para manter o teste autocontido. Em produção com alto volume, o ideal seria object storage como S3, Azure Blob ou equivalente.
 
 ## Testes
 
